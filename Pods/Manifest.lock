@@ -1,0 +1,29 @@
+PODS:
+  - Alamofire (5.2.2)
+  - AlamofireImage (4.1.0):
+    - Alamofire (~> 5.1)
+  - EMTNeumorphicView (1.0.4)
+  - Instructions (2.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - AlamofireImage
+  - EMTNeumorphicView
+  - Instructions
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AlamofireImage
+    - EMTNeumorphicView
+    - Instructions
+
+SPEC CHECKSUMS:
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
+  EMTNeumorphicView: cb5e92953e43b1872ab47fefd451a9ce0c16fc77
+  Instructions: debf9cedeaf8d095108fd35d2c54b97ccf769e65
+
+PODFILE CHECKSUM: 03b743c64a5999ec248c339f181a1f3e1e4ceaad
+
+COCOAPODS: 1.9.3
