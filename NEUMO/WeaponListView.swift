@@ -17,7 +17,7 @@ class WeaponListView: UIViewController {
         
         UIView.setAnimationsEnabled(true)
         
-        //通信終了を確認して武器カテゴリー分け
+        //通信終了を確認してブキカテゴリー分け
         globalDispatchGroup.notify(queue: .main) {
             
             //セルを生成して
@@ -25,17 +25,11 @@ class WeaponListView: UIViewController {
             //画像を設定
             self.setWeaponImages()
             
+            //アニメーションで表示
             for eachCell in self.neuTableCells {
-                eachCell.neumorphicLayer?.elementDepth = neuButtonBasicDepth
+                eachCell.appear(duration: 0.1)
             }
             
-            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
-                for n in 0...self.neuTableCells.count - 1 {
-                    self.neuTableCellLabels[n].alpha = 1
-                    self.neuTableCellImages[n].alpha = 1
-                    self.neuTableCellArrows[n].alpha = 1
-                }
-            })
         }
         
     }
@@ -44,7 +38,7 @@ class WeaponListView: UIViewController {
     //-------------------IBアウトレットなど-------------------
     
     
-    @IBOutlet weak var weaponScrollview: UIScrollView!
+    @IBOutlet weak var weaponScrollView: UIScrollView!
     
     
     //親ビューから受け取る値
@@ -52,23 +46,19 @@ class WeaponListView: UIViewController {
     var inkAPI:InkAPI?
     
     var weapons:[Weapon] = []
-    var weaponsInType:[String:[Weapon]] = [:]
     
     //テーブルビュー用
-    var neuTableCells:[EMTNeumorphicButton] = []
-    var neuTableCellLabels:[UILabel] = []
-    var neuTableCellArrows:[UILabel] = []
-    var neuTableCellImages:[UIImageView] = []
+    var neuTableCells:[NeumorphicCellButton] = []
     
     //-------------------メソッド--------------------
-    
     
     func makeWeaponTables() {
         
         //セルと作るブキ配列
         let typeWeaponsGrouped = inkAPI!.typeWeaponsGrouped
+        let weaponNames:[[String]] = inkAPI!.groupedWeaponList(groupedWeapons: typeWeaponsGrouped)!
         
-        guard typeWeaponsGrouped.count != 0 else { return }
+        guard weaponNames.count != 0 else { return }
         
         //セルのframe関係
         let neuTableCellWidth:CGFloat = safeAreaWidth! - (neuButtonGap + neuButtonInset) * 2
@@ -82,64 +72,28 @@ class WeaponListView: UIViewController {
             
             for m in 0...weaponGroup.count - 1 {
                 
-                let neuCell = EMTNeumorphicButton()
+                //新規セル
+                let neuCell = NeumorphicCellButton()
+                neuCell.initialize(backGroundColor: view.backgroundColor!,
+                                   text: weaponNames[n][m])
+                
                 //ボタンの影設定
                 if weaponGroup.count == 1 {
-                    neuCell.neumorphicLayer?.cornerType = .all
+                    neuCell.visibleButton.neumorphicLayer?.cornerType = .all
                 } else if m == 0 {
-                    neuCell.neumorphicLayer?.cornerType = .topRow
+                    neuCell.visibleButton.neumorphicLayer?.cornerType = .topRow
                 } else if m == weaponGroup.count - 1 {
-                    neuCell.neumorphicLayer?.cornerType = .bottomRow
+                    neuCell.visibleButton.neumorphicLayer?.cornerType = .bottomRow
                 } else {
-                    neuCell.neumorphicLayer?.cornerType = .middleRow
+                    neuCell.visibleButton.neumorphicLayer?.cornerType = .middleRow
                 }
+                
                 //ボタン外観設定
-                neuCell.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
-                neuCell.neumorphicLayer?.cornerRadius = 12
-                neuCell.neumorphicLayer?.elementDepth = 0
-                neuCell.neumorphicLayer?.lightShadowOpacity = 1
-                neuCell.neumorphicLayer?.darkShadowOpacity = 0.3
-                neuCell.neumorphicLayer?.edged = false
-                neuCell.frame.size = CGSize(width: neuTableCellWidth, height: neuTableCellHeight)
+                neuCell.size(width: neuTableCellWidth, height: neuTableCellHeight)
                 neuCell.frame.origin = CGPoint(x: cellX, y: cellY)
                 
-                //セル右端の矢印
-                let neuTableCellArrow = UILabel()
-                neuTableCellArrow.alpha = 0
-                neuTableCellArrow.textAlignment = .center
-                neuTableCellArrow.font = NeuFont.arrow
-                neuTableCellArrow.textColor = NeuColor.arrow
-                neuTableCellArrow.text = ">"
-                neuTableCellArrow.frame.size.width = neuTableCellHeight * 0.8
-                neuTableCellArrow.frame.size.height = neuTableCellHeight
-                neuTableCellArrow.frame.origin.x = neuTableCellWidth - neuTableCellArrow.frame.size.width
-                neuTableCellArrows.append(neuTableCellArrow)
-                neuCell.addSubview(neuTableCellArrows.last!)
-                
-                //ラベル表示領域幅
-                let neuTableCellLabelX = neuTableCellHeight + neuTableCellInset * 2
-                let neuTableCellLabelWidth = neuTableCellWidth - neuTableCellLabelX - neuTableCellArrow.frame.size.width
-                
-                //セル内ラベル
-                let neuTableCellLabel = UILabel()
-                neuTableCellLabel.alpha = 0
-                neuTableCellLabel.font = NeuFont.lightCell
-                neuTableCellLabel.textColor = NeuColor.lightLetter
-                neuTableCellLabel.text = typeWeaponsGrouped[n][m].name["en_US"]
-                neuTableCellLabel.sizeToFit()
-                neuTableCellLabel.frame.origin = CGPoint(x: neuTableCellLabelX,
-                                                         y: (neuTableCellHeight - neuTableCellLabel.frame.size.height) / 2)
-                
                 //ラベルの横幅確認
-                let labelWidthRatio:CGFloat = neuTableCellLabelWidth / neuTableCellLabel.frame.size.width
-                if labelWidthRatio < 1.0 {
-                    let newLabelX = neuTableCellLabel.frame.origin.x
-                    neuTableCellLabel.transform = CGAffineTransform(scaleX: labelWidthRatio, y: 1)
-                    neuTableCellLabel.frame.origin.x = newLabelX
-                }
-                
-                neuTableCellLabels.append(neuTableCellLabel)
-                neuCell.addSubview(neuTableCellLabels.last!)
+                neuCell.labelWidthFix()
                 
                 //セルを配列に格納
                 neuTableCells.append(neuCell)
@@ -153,11 +107,11 @@ class WeaponListView: UIViewController {
         
         //セルをビューに追加
         for eachCell in neuTableCells {
-            weaponScrollview.addSubview(eachCell)
+            weaponScrollView.addSubview(eachCell)
         }
         
         //スクロールコンテンツサイズ
-        weaponScrollview.contentSize = CGSize(width: weaponScrollview.frame.size.width, height: cellY)
+        weaponScrollView.contentSize = CGSize(width: weaponScrollView.frame.size.width, height: cellY)
         
     }
     
@@ -167,17 +121,7 @@ class WeaponListView: UIViewController {
         
         for n in 0...neuTableCells.count - 1 {
             //取得した画像ビュー
-            let neuImageView = inkAPI?.weaponImageViews[n]
-            neuImageView!.alpha = 0
-            
-            //frame設定
-            let imageSize:CGFloat = neuTableCellHeight - neuTableCellInset * 2
-            neuImageView!.frame.size = CGSize(width: imageSize, height: imageSize)
-            neuImageView!.frame.origin = CGPoint(x: neuTableCellInset * 2, y: neuTableCellInset)
-            
-            //配列に格納・セルに表示
-            neuTableCellImages.append(neuImageView!)
-            neuTableCells[n].addSubview(neuTableCellImages[n])
+            neuTableCells[n].cellIconImage.image = inkAPI?.weaponImageViews[n].image
         }
     }
     

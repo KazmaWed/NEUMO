@@ -58,11 +58,12 @@
                         <outlet property="secondButton" destination="2LA-Sd-Uij" id="aay-VM-D6x"/>
                         <outlet property="thirdButton" destination="B5g-Cn-Mmv" id="h1g-MC-jct"/>
                         <segue destination="EtR-XZ-pGa" kind="show" identifier="showWeaponList" id="AG9-3X-Vlh"/>
+                        <segue destination="ha3-R6-N6A" kind="show" identifier="showGearList" id="xKV-z6-egM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="114.50892857142857"/>
+            <point key="canvasLocation" x="1049" y="115"/>
         </scene>
         <!--Weapon List View-->
         <scene sceneID="47u-p6-LDe">
@@ -80,7 +81,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="uvT-sx-AuU" firstAttribute="bottom" secondItem="5UX-Gp-XHB" secondAttribute="bottom" constant="-34" id="NjR-vW-cT8"/>
+                            <constraint firstItem="uvT-sx-AuU" firstAttribute="bottom" secondItem="5UX-Gp-XHB" secondAttribute="bottom" id="NjR-vW-cT8"/>
                             <constraint firstItem="5UX-Gp-XHB" firstAttribute="trailing" secondItem="uvT-sx-AuU" secondAttribute="trailing" id="ZM6-7h-a0F"/>
                             <constraint firstItem="5UX-Gp-XHB" firstAttribute="top" secondItem="uvT-sx-AuU" secondAttribute="top" id="rxt-hc-RQp"/>
                             <constraint firstItem="5UX-Gp-XHB" firstAttribute="leading" secondItem="uvT-sx-AuU" secondAttribute="leading" id="uup-6r-AM1"/>
@@ -89,12 +90,55 @@
                     </view>
                     <navigationItem key="navigationItem" id="ine-hJ-qLg"/>
                     <connections>
-                        <outlet property="weaponScrollview" destination="5UX-Gp-XHB" id="P2x-PJ-JB2"/>
+                        <outlet property="weaponScrollView" destination="5UX-Gp-XHB" id="GSb-rm-eTH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GYb-Xs-fQP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953.6231884057972" y="114.50892857142857"/>
+            <point key="canvasLocation" x="1948" y="-571"/>
+        </scene>
+        <!--Gear List View-->
+        <scene sceneID="bF1-jv-uG9">
+            <objects>
+                <viewController id="ha3-R6-N6A" customClass="GearListView" customModule="INK_APP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LCR-RS-2Qp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Udk-k6-u55">
+                                <rect key="frame" x="0.0" y="88" width="414" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="Tsn-Nu-0Xv"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWQ-Le-D3X">
+                                <rect key="frame" x="0.0" y="192" width="414" height="704"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="S7o-al-wOJ"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="fIa-qB-p2V"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Udk-k6-u55" firstAttribute="trailing" secondItem="lsx-TR-hLc" secondAttribute="trailing" id="3aO-DQ-517"/>
+                            <constraint firstItem="wWQ-Le-D3X" firstAttribute="top" secondItem="Udk-k6-u55" secondAttribute="bottom" id="RcK-1c-5Mf"/>
+                            <constraint firstItem="wWQ-Le-D3X" firstAttribute="trailing" secondItem="lsx-TR-hLc" secondAttribute="trailing" id="YsY-iB-oBi"/>
+                            <constraint firstItem="wWQ-Le-D3X" firstAttribute="bottom" secondItem="LCR-RS-2Qp" secondAttribute="bottom" id="cjv-La-LTW"/>
+                            <constraint firstItem="Udk-k6-u55" firstAttribute="top" secondItem="lsx-TR-hLc" secondAttribute="top" id="gy2-lo-bRC"/>
+                            <constraint firstItem="Udk-k6-u55" firstAttribute="leading" secondItem="lsx-TR-hLc" secondAttribute="leading" id="jFm-Tr-PPa"/>
+                            <constraint firstItem="wWQ-Le-D3X" firstAttribute="leading" secondItem="lsx-TR-hLc" secondAttribute="leading" id="qmy-aB-oBZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lsx-TR-hLc"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3Hz-Tv-XwU"/>
+                    <connections>
+                        <outlet property="gearScrollView" destination="wWQ-Le-D3X" id="E7G-69-IIt"/>
+                        <outlet property="viewForSegmentedControl" destination="Udk-k6-u55" id="uzO-VY-kUk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aWi-jJ-dAR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1947.826086956522" y="114.50892857142857"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="58B-fL-z2u">

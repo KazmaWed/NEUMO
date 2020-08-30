@@ -15,8 +15,10 @@ class NeuFont: NSObject {
     static let lightTheme = UIFont(name: "AvenirNext-Medium", size: 28.0)
     static let lightSub = UIFont(name: "AvenirNext-Regular", size: 24.0)
     static let lightCell = UIFont(name: "AvenirNext-Regular", size: 21.0)
+    static let groupLabel = UIFont(name: "AvenirNext-Medium", size: 20.0)
     static let lightCoach = UIFont(name: "AvenirNext-Regular", size: 15.0)
     static let arrow = UIFont(name: "HiraMaruProN-W4", size: 21)
+    static let cegmentedControl = UIFont(name: "Futura-Medium", size: 16)
     
 }
 
@@ -24,7 +26,7 @@ class subItems: NSObject {
     
     static let name = [["Shooters", "Splatlings", "Nozzlenose", "Blasters", "Rollers", "Brushes",
                         "Chargers","Sloshers", "Dualies","Brellas"],
-                       ["Headgear", "Clothing", "Shoes", "Brand", "Power"],
+                       ["Headgear", "Clothing", "Shoes"],
                        ["Favorites", "Cordinate"],
                        ["Change Theme", "Second Item", "Third Item"]]
     

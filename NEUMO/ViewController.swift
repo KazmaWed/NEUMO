@@ -235,9 +235,17 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
          
             if selectedButton == 0 {
                 
-                //API通信
+                //API通信・ブキ取得
                 globalDispatchGroup.enter()
                 inkAPI.getWeapons(closure: { () -> Void in
+                    globalDispatchGroup.leave()
+                })
+                
+            } else if selectedButton == 1 {
+                
+                //API通信・ギア取得
+                globalDispatchGroup.enter()
+                inkAPI.getGears(closure: { () -> Void in
                     globalDispatchGroup.leave()
                 })
                 
@@ -491,7 +499,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         
         selectedSubButton = sender.tag
         
-        if selectedButton == 0 {
+        if selectedButton == 0 || selectedButton == 1 {
             
             //タッチ一時無効化
             view.isUserInteractionEnabled = false
@@ -526,16 +534,42 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             }
             
             globalDispatchGroup.notify(queue: .main) {
-                //メインごとに分けて
-                self.inkAPI.groupByMain(weaponType: subItems.name[self.selectedButton!][sender.tag])
-                //画像を非同期で取得
-                self.inkAPI.getImages()
                 
+                var segueIdentifier:String?
+                
+                if self.selectedButton == 0 {
+                    
+                    //メインごとに分けて
+                    self.inkAPI.groupByMain(weaponType: subItems.name[self.selectedButton!][sender.tag])
+                    //画像を非同期で取得
+                    self.inkAPI.getWeaponImages()
+                    //画面遷移ID
+                    segueIdentifier = "showWeaponList"
+                    
+                } else if self.selectedButton == 1 {
+                    
+                    switch sender.tag {
+                    case 0, 1, 2 :
+                        let gearType = subItems.name[self.selectedButton!][sender.tag]
+                        //ブランドごとに分けて
+                        self.inkAPI.groupByBrand(gearType: gearType)
+                        self.inkAPI.groupByAbility(gearType: gearType)
+                        //画像を非同期で取得
+                        self.inkAPI.getGearImages(gearType: gearType)
+                        //画面遷移ID
+                        segueIdentifier = "showGearList"
+                        
+                    default :
+                        print("derault")
+                    }
+                    
+                }
+
                 //遅延で画面遷移
                 DispatchQueue.main.asyncAfter(deadline: .now() + changeDepthDuration + addionalDelay) {
                     //一時アニメ無効
                     UIView.setAnimationsEnabled(false)
-                    self.performSegue(withIdentifier: "showWeaponList", sender: nil)
+                    self.performSegue(withIdentifier: segueIdentifier!, sender: nil)
                     //タッチ一時有効化
                     self.view.isUserInteractionEnabled = true
                 }
@@ -562,6 +596,10 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             let next = segue.destination as? WeaponListView
             next?.weaponCategory = subItems.name[selectedButton!][selectedSubButton!]
             next?.inkAPI = self.inkAPI
+        } else if segue.identifier == "showGearList" {
+            let next = segue.destination as? GearListView
+            next?.listTitle = subItems.name[selectedButton!][selectedSubButton!]
+            next?.inkAPI = self.inkAPI
         }
         
     }
@@ -580,14 +618,14 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         
         coachMarksController.overlay.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.2)
         
-        self.coachMarksController.start(in: .window(over: self))
+//        self.coachMarksController.start(in: .window(over: self))
         
     }
     
 }
 
 
-//--------------------
+//--------------------起動時ポップアップ--------------------
 
 
 extension ViewController: CoachMarksControllerDataSource, CoachMarksControllerDelegate {
