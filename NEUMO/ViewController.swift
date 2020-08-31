@@ -92,7 +92,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     var neuButtonSubButtons:[UIButton] = []
     
     //API
-    let inkAPI = InkAPI()
+    var inkAPI = InkAPI()
     //起動時の確認用
     var opening = true
     
@@ -109,10 +109,10 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
 
     let coachMarksController = CoachMarksController()
     var pointOfInterests:[UIView] = []
-    let coachMessages = ["スプラトゥーン２に登場するブキの情報が閲覧できます！",
-                         "スプラトゥーン２に登場するギアの情報が閲覧できます！\n（未実装）",
-                         "お気に入りのギアセットを登録できます！\n（未実装）",
-                         "設定変更はこちらから！\n（未実装）"]
+    let coachMessages = ["スプラトゥーン２に登場するブキの情報が閲覧できます",
+                         "スプラトゥーン２に登場するギアの情報が閲覧できます",
+                         "お気に入りのギアセットを登録できます\n（未実装）",
+                         "設定変更はこちらから\n（未実装）"]
     
     
     //--------------------ボタン--------------------
@@ -203,6 +203,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         }
         
         if selectedButton != nil {
+            
+            //初期化
+            inkAPI = InkAPI()
             
             let mainLabelHaight = neuButtonLabels[selectedButton!].frame.size.height
             let subLabelsHeight = neuButtonSubButtons.last!.frame.origin.y + neuButtonSubButtons.last!.frame.size.height
@@ -555,7 +558,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
                         self.inkAPI.groupByBrand(gearType: gearType)
                         self.inkAPI.groupByAbility(gearType: gearType)
                         //画像を非同期で取得
-                        self.inkAPI.getGearImages(gearType: gearType)
+                        self.inkAPI.getGearImages(gearType: gearType, groupBy: "Brand")
                         //画面遷移ID
                         segueIdentifier = "showGearList"
                         

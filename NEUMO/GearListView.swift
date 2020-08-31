@@ -15,6 +15,7 @@ class GearListView: UIViewController {
 
         //背景色適用
         view.backgroundColor = NeuColor.lightTheme
+        
         title = listTitle
     }
     
@@ -30,16 +31,16 @@ class GearListView: UIViewController {
             //画像を設定
             self.setWeaponImages()
             
+            //アニメーションでセル表示
+            for eachCell in self.neuTableCells {
+                eachCell.appear(duration: 0.1)
+            }
+            
             //アニメーションでラベル
             for eachLabel in self.neuTableGroupLabels {
                 UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseInOut, animations: {
                     eachLabel.alpha = 1
                 })
-            }
-            
-            //アニメーションでセル表示
-            for eachCell in self.neuTableCells {
-                eachCell.appear(duration: 0.1)
             }
             
             //セグメンテッドコントロール表示
@@ -102,11 +103,19 @@ class GearListView: UIViewController {
         
         let tag = sender.tag
         
+        self.segmentedControl.invert(at: tag)
+        
         self.removeCells()
         
         //通信終了を確認してギアカテゴリー分け
         globalDispatchGroup.notify(queue: .main) {
+            
+            //スクロールを最上部へ
+            self.gearScrollView.contentOffset.y = 0
 
+            //画像取得
+            self.inkAPI?.getGearImages(gearType: self.listTitle!, groupBy: self.titles[tag])
+            
             //セルを生成して
             self.makeTables(groupBy: self.titles[tag])
             //画像を設定
@@ -123,8 +132,6 @@ class GearListView: UIViewController {
             for eachCell in self.neuTableCells {
                 eachCell.appear(duration: 0.1)
             }
-
-            self.segmentedControl.invert(at: tag)
 
         }
         
@@ -174,6 +181,7 @@ class GearListView: UIViewController {
         
         //ギアの名前リスト取得
         var typeGearsGrouped:[[Gear]]
+        
         if groupBy == "Brand" {
             typeGearsGrouped = inkAPI!.typeGearsBrandGrouped
         } else {

@@ -390,8 +390,15 @@ class InkAPI: NSObject {
         var weaponNum = 0
         for n in 0...typeWeaponsGrouped.count - 1 {
             for m in 0...typeWeaponsGrouped[n].count - 1 {
+                
+                //ギア名日本後
+                let gearNameJp = typeWeaponsGrouped[n][m].name["ja_JP"]!
+                
                 //画像URL
-                let url = URL(string: "https://cdn.wikimg.net/en/splatoonwiki/images/6/60/S2_Weapon_Main_Splattershot.png")!
+                let baseUrl = "https://cdn.wikiwiki.jp/to/w/splatoon2mix/ブキ/::ref/メイン-"
+                let urlString:String = baseUrl + gearNameJp + ".png"
+                let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                let url = URL(string: encodeUrlString)!
                 
                 let neuImageView = UIImageView()
                 neuImageView.af.setImage(withURL: url)
@@ -401,30 +408,52 @@ class InkAPI: NSObject {
         }
     }
     
-    func getGearImages(gearType:String) {
+    func getGearImages(gearType:String, groupBy:String) {
         
-        //
-        guard typeGearsBrandGrouped.count != 0 else { return }
-        //
+        //イメージを取得するギア配列
+        var gears:[[Gear]]?
+        
+        if groupBy == "Brand" {
+            gears = typeGearsBrandGrouped
+        } else {
+            gears = typeGearsAbilityGrouped
+        }
+        
+        //ガード
+        guard gears!.count != 0 else { return }
+        
+        //配列初期化
         gearImageViews = []
-        //
-        for n in 0...typeGearsBrandGrouped.count - 1 {
-            for _ in 0...typeGearsBrandGrouped[n].count - 1 {
+        for n in 0...gears!.count - 1 {
+            for _ in 0...gears![n].count - 1 {
                 gearImageViews.append(UIImageView())
             }
         }
         
+        let baseUrl = "https://cdn.wikiwiki.jp/to/w/splatoon2mix/ギア/::ref/"
+        
         var gearNum = 0
-        for n in 0...typeGearsBrandGrouped.count - 1 {
-            for _ in 0...typeGearsBrandGrouped[n].count - 1 {
-                var url:URL?
-                if gearType == "Headgear" {
+        for n in 0...gears!.count - 1 {
+            for m in 0...gears![n].count - 1 {
+                
+                //ギア名日本後
+                let gearNameJp = gears![n][m].name["ja_JP"]!
+                
                 //画像URL
-                    url = URL(string: "https://cdn.wikimg.net/en/splatoonwiki/images/9/9b/S2_Gear_Headgear_Knitted_Hat.png")!
+                var url:URL?
+                
+                if gearType == "Headgear" {
+                    let urlString:String = baseUrl + "アタマ-" + gearNameJp + ".png"
+                    let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                    url = URL(string: encodeUrlString)
                 } else if gearType == "Clothing" {
-                    url = URL(string: "https://cdn.wikimg.net/en/splatoonwiki/images/4/44/S2_Gear_Clothing_White_King_Tank.png")!
+                    let urlString:String = baseUrl + "フク-" + gearNameJp + ".png"
+                    let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                    url = URL(string: encodeUrlString)
                 } else {
-                    url = URL(string: "https://cdn.wikimg.net/en/splatoonwiki/images/9/94/S2_Gear_Shoes_Black_Dakroniks.png")!
+                    let urlString:String = baseUrl + "クツ-" + gearNameJp + ".png"
+                    let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                    url = URL(string: encodeUrlString)
                 }
                 
                 let neuImageView = UIImageView()
@@ -437,19 +466,3 @@ class InkAPI: NSObject {
     }
     
 }
-
-//URLから画像取得簡易化
-//extension UIImage {
-//    public convenience init(url: URL) {
-//        globalDispatchGroup.enter()
-//        do {
-//            let data = try Data(contentsOf: url)
-//            self.init(data: data)!
-//            globalDispatchGroup.leave()
-//            return
-//        } catch let err {
-//            print("Error : \(err.localizedDescription)")
-//        }
-//        self.init()
-//    }
-//}
