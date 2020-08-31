@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4760518124FCE85E00EC2441 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4760518024FCE85E00EC2441 /* ItemDetailView.swift */; };
 		47A24E0124F8EB2D00FE13C1 /* GearListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A24E0024F8EB2D00FE13C1 /* GearListView.swift */; };
 		47A24E0324F8EC5F00FE13C1 /* NeumorphicTableCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A24E0224F8EC5F00FE13C1 /* NeumorphicTableCellClass.swift */; };
 		47A24E0524FA328800FE13C1 /* NeumorpohicSegmentedControlClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A24E0424FA328800FE13C1 /* NeumorpohicSegmentedControlClass.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4760518024FCE85E00EC2441 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		47A24E0024F8EB2D00FE13C1 /* GearListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GearListView.swift; sourceTree = "<group>"; };
 		47A24E0224F8EC5F00FE13C1 /* NeumorphicTableCellClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicTableCellClass.swift; sourceTree = "<group>"; };
 		47A24E0424FA328800FE13C1 /* NeumorpohicSegmentedControlClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorpohicSegmentedControlClass.swift; sourceTree = "<group>"; };
@@ -82,12 +84,13 @@
 				47E014CA24EF56ED0016F7F3 /* ViewController.swift */,
 				47E4C2EE24F0EA11008AC2F1 /* WeaponListView.swift */,
 				47A24E0024F8EB2D00FE13C1 /* GearListView.swift */,
+				4760518024FCE85E00EC2441 /* ItemDetailView.swift */,
+				47E014CC24EF56ED0016F7F3 /* Main.storyboard */,
 				47E014DA24EF95F90016F7F3 /* Statics.swift */,
 				47E4C2F024F12F80008AC2F1 /* Structs.swift */,
 				47E4C2F224F1352C008AC2F1 /* InkAPIClass.swift */,
 				47A24E0224F8EC5F00FE13C1 /* NeumorphicTableCellClass.swift */,
 				47A24E0424FA328800FE13C1 /* NeumorpohicSegmentedControlClass.swift */,
-				47E014CC24EF56ED0016F7F3 /* Main.storyboard */,
 				47E014CF24EF56F00016F7F3 /* Assets.xcassets */,
 				47E014D124EF56F00016F7F3 /* LaunchScreen.storyboard */,
 				47E014D424EF56F00016F7F3 /* Info.plist */,
@@ -230,6 +233,7 @@
 				47A24E0324F8EC5F00FE13C1 /* NeumorphicTableCellClass.swift in Sources */,
 				47E4C2F124F12F80008AC2F1 /* Structs.swift in Sources */,
 				47E014CB24EF56ED0016F7F3 /* ViewController.swift in Sources */,
+				4760518124FCE85E00EC2441 /* ItemDetailView.swift in Sources */,
 				47E014C724EF56ED0016F7F3 /* AppDelegate.swift in Sources */,
 				47A24E0124F8EB2D00FE13C1 /* GearListView.swift in Sources */,
 				47E014C924EF56ED0016F7F3 /* SceneDelegate.swift in Sources */,

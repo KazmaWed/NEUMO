@@ -91,12 +91,12 @@ class NeumorphicCellButton: UIButton {
         
     }
     
-    func disappear(duration:Double = 0.1) {
+    func disappear(duration:Double = 0.1, labelRemain:Bool = false) {
         
         visibleButton.neumorphicLayer?.elementDepth = 0
         UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: {
             self.alpha = 0
-            self.cellLabel.alpha = 0
+            if !labelRemain { self.cellLabel.alpha = 0 }
             self.arrow.alpha = 0
             self.cellIconImage.alpha = 0
         })

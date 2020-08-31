@@ -7,6 +7,7 @@ class NeumorphicSegmentedControl: UIView {
     var buttonNeumorphicLayerFrame:[UIView] = []
     var buttons:[UIButton] = []
     var buttonNeumorphicLayer:[EMTNeumorphicView] = []
+    var selectedButttonTag:Int = 0
     
     func initialize(backgroundColor:UIColor, titles inputTitles :[String]) {
         
@@ -84,6 +85,7 @@ class NeumorphicSegmentedControl: UIView {
     }
     
     @objc func invert(at:Int) {
+        selectedButttonTag = at
         for n in 0...buttons.count - 1 {
             if n == at {
                 buttons[n].setTitleColor(NeuColor.lightTheme, for: .normal)
@@ -96,13 +98,21 @@ class NeumorphicSegmentedControl: UIView {
     }
     
     func appear(duration:Double) {
-        
         for n in 0...titles!.count - 1 {
             buttonNeumorphicLayer[n].neumorphicLayer?.elementDepth = neuButtonBasicDepth * 0.8
             
             self.buttons[n].alpha = 1
+            self.buttonNeumorphicLayerFrame[n].alpha = 1
         }
-        
+    }
+    
+    func disappear(duration:Double) {
+        for n in 0...titles!.count - 1 {
+            buttonNeumorphicLayer[n].neumorphicLayer?.elementDepth = 0
+            
+            self.buttons[n].alpha = 0
+            self.buttonNeumorphicLayerFrame[n].alpha = 0
+        }
     }
     
 }

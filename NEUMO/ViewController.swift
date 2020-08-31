@@ -46,6 +46,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.buttonAppear()
                 self.makePopLabel()
+//                self.coachMarksController.start(in: .window(over: self))
             }
             
             opening = false
@@ -591,6 +592,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         if viewController is ViewController && !opening {
             UIView.setAnimationsEnabled(false)
         }
+        if viewController is WeaponListView || viewController is GearListView {
+            UIView.setAnimationsEnabled(false)
+        }
     }
     //遷移先に値渡し
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -620,8 +624,6 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         }
         
         coachMarksController.overlay.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.2)
-        
-//        self.coachMarksController.start(in: .window(over: self))
         
     }
     
